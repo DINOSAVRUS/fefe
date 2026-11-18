@@ -12,32 +12,6 @@ from constants import *
 from models import *
 from storage import *
 
-class NonScrollableListView(QListView):
-    """Popup list with rounded clipping and no wheel scrolling."""
-
-    def _clip_viewport_to_rounded_rect(self):
-        viewport = self.viewport()
-        if viewport.width() < 1 or viewport.height() < 1:
-            return
-        clip_path = QPainterPath()
-        clip_path.addRoundedRect(
-            QRectF(viewport.rect()),
-            7.0,
-            7.0,
-        )
-        viewport.setMask(QRegion(clip_path.toFillPolygon().toPolygon()))
-
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        self._clip_viewport_to_rounded_rect()
-
-    def showEvent(self, event):
-        super().showEvent(event)
-        self._clip_viewport_to_rounded_rect()
-
-    def wheelEvent(self, event):
-        event.accept()
-
 
 class CoordinateSpinBox(QDoubleSpinBox):
 
@@ -531,33 +505,15 @@ class LibraryWindow(QDialog):
         self.edit_button.setMinimumWidth(142)
         self.rename_button.setMinimumWidth(132)
         self.delete_button.setMinimumWidth(92)
-        self.target_graph_combo = QComboBox()
-        self.target_graph_combo.setObjectName("targetGraphCombo")
-        target_view = NonScrollableListView()
-        target_view.setObjectName("targetGraphPopupView")
-        target_view.setMinimumWidth(160)
-        target_view.setMaximumWidth(160)
-        target_view.setMinimumHeight(82)
-        target_view.setMaximumHeight(82)
-        target_view.setFixedHeight(82)
-        target_view.setSpacing(1)
-        target_view.setContentsMargins(0, 0, 0, 0)
-        # Keep item painting inside the rounded popup frame.
-        target_view.setViewportMargins(5, 5, 5, 5)
-        target_view.setUniformItemSizes(True)
-        target_view.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        target_view.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        target_view.setFrameShape(QFrame.Shape.NoFrame)
-        target_view.setLineWidth(0)
-        target_view.setFont(QFont("Arial", 11))
-        self.target_graph_combo.setView(target_view)
-        self.target_graph_combo.setMaxVisibleItems(2)
-        self.target_graph_combo.setMinimumWidth(140)
-        self.target_graph_combo.setMaximumWidth(150)
-        self.target_graph_combo.addItems(["График 1", "График 2"])
-        self.target_graph_combo.setCurrentIndex(self.target_index)
+
+        self.target_group = QButtonGroup(self)
+        self.target_group.setExclusive(True)
+        self.target_graph_1 = QRadioButton("График 1")
+        self.target_graph_2 = QRadioButton("График 2")
+        self.target_group.addButton(self.target_graph_1, 0)
+        self.target_group.addButton(self.target_graph_2, 1)
+        (self.target_graph_1 if self.target_index == 0 else self.target_graph_2).setChecked(True)
+
         self.target_graph_label = QLabel("Вставить в:")
         close_button = QPushButton("Закрыть")
         close_button.setMinimumWidth(92)
@@ -571,7 +527,8 @@ class LibraryWindow(QDialog):
         buttons.addWidget(self.delete_button)
         buttons.addSpacing(8)
         buttons.addWidget(self.target_graph_label)
-        buttons.addWidget(self.target_graph_combo)
+        buttons.addWidget(self.target_graph_1)
+        buttons.addWidget(self.target_graph_2)
         buttons.addStretch(1)
         buttons.addWidget(close_button)
 
@@ -629,7 +586,7 @@ class LibraryWindow(QDialog):
         if selected is None:
             return
         self.graph_opened.emit(
-            selected[0], self.target_graph_combo.currentIndex(), "")
+            selected[0], self.target_group.checkedId(), "")
         self.accept()
 
     def _edit_points(self):
@@ -980,7 +937,7 @@ class MainWindow(QMainWindow):
         try:
             write_graph(path, graph, name=f"График {index + 1}")
         except (OSError, ValueError) as error:
-            QMessageBox.warning(self, "Экспорт графика", f"Не удалось сохранить график: {error}")
+            QMessageBox.warning(self, "Экспорт графика", f"Не удалось сохранить файл графика: {error}")
             return
         self._notify("Полный график экспортирован")
 
