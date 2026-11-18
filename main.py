@@ -4,10 +4,6 @@ from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QFont
 
 from constants import *
-from dropdown_fix import install_dropdown_popup_fix
-
-# Patch the widget namespace before interface.py imports QComboBox.
-install_dropdown_popup_fix()
 from interface import *
 from storage import *
 
@@ -33,6 +29,15 @@ def main():
         QPushButton:hover { background-color: #304a63; border-color: #5a8bb5; }
         QPushButton:pressed { background-color: #1b2a39; }
         QPushButton:disabled { color: #a5b5c6; background-color: #1a2531; border-color: #34485d; }
+        QComboBox { background-color: #0f1822; color: #e5edf5; border: 1px solid #34485d; border-radius: 7px; padding: 7px 30px 7px 9px; min-height: 20px; selection-background-color: #2879ad; }
+        QComboBox:hover { border-color: #5a8bb5; }
+        QComboBox:focus { border-color: #65b9ed; }
+        QComboBox::drop-down { subcontrol-origin: padding; subcontrol-position: top right; width: 26px; background-color: #263b50; border-left: 1px solid #405a73; border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+        QComboBox::drop-down:hover { background-color: #345675; }
+        QComboBox::down-arrow { image: url("@DOWN_ARROW@"); width: 10px; height: 10px; }
+        QComboBox QAbstractItemView { background-color: #1b2938; color: #e5edf5; border: 1px solid #40566d; selection-background-color: #28658d; selection-color: #ffffff; outline: 0; padding: 4px; }
+        QComboBox QAbstractItemView::item { min-height: 28px; padding: 5px 9px; border-radius: 4px; }
+        QComboBox QAbstractItemView::item:hover { background-color: #243f57; color: #ffffff; }
         QLineEdit, QSpinBox, QDoubleSpinBox { background-color: #0f1822; color: #e5edf5; border: 1px solid #34485d; border-radius: 7px; padding: 7px 9px; selection-background-color: #2879ad; selection-color: #ffffff; }
         QSpinBox, QDoubleSpinBox { padding-right: 28px; }
         QSpinBox::up-button, QDoubleSpinBox::up-button { subcontrol-origin: border; subcontrol-position: top right; width: 22px; background-color: #263b50; border-left: 1px solid #405a73; border-top-right-radius: 6px; }
