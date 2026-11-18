@@ -1,0 +1,65 @@
+
+c_background = "#111923"
+c_grid = "#344252"
+c_axis = "#a9b8c8"
+c_text = "#e5edf5"
+c_graph_first = "#1565c0"
+c_graph_second = "#d32f2f"
+c_max = "#ff8c00"
+c_min = "#8e24aa"
+c_inflection = "#2e9d3e"
+c_insections = "#e5edf5"
+c_errors = "#ff6b78"
+default_graphs = (c_graph_first, c_graph_second)
+
+m_linear = "Линейная"
+m_krivaya = "Сплайн"
+m_beskonechnaya = "Полином"
+modes = (m_linear, m_beskonechnaya, m_krivaya)
+default_mode = m_krivaya
+default_exponent = 3
+min_exponent = 1
+max_exponent = 15
+
+samples = 2400
+min_length = 5
+max_markers = 200
+max_in_spisok = 6
+dopusk = 1e-11
+search_iterations = 50
+after_point = 1
+
+initial_scale = 40.0
+min_scale = 0.5
+max_scale = 20000.0
+zoom = 1.15
+target_pixels_grid = 80
+screen_limit = 20000
+mouse_radius = 9
+point_radius = 5
+marker_radius = 7
+line_width = 2
+label_box_width =60
+label_box_height = 16
+label_left_limit = 20
+label_edge_field = 20
+label_vertical_field = 20
+formula_left = 14
+formula_top = 24
+formula_spase_heigth = 22
+formula_font_size = 13
+window_title = "Построитель графиков по точкам"
+window_width = 1200
+window_height = 780
+side_panel_width = 400
+icon_file_name = "icon.png"
+file_filter_points = "Координаты (*.csv *.txt)"
+library_window_height = 460
+library_window_width = 620
+points_editor_columns = ("x", "y")
+points_editor_height = 420
+points_editor_width = 320
+status_message_ms = 5000
+database_file_name = "graphs.db"
+points_separators = r"[,;\s]+"
+
