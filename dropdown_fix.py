@@ -13,9 +13,11 @@ def _position_popup_below(combo):
 
     anchor = combo.mapToGlobal(QPoint(0, combo.height()))
     screen = QApplication.screenAt(anchor) or combo.screen()
+    if screen is None:
+        return
     available = screen.availableGeometry()
 
-    width = max(combo.width(), popup.width())
+    width = min(max(combo.width(), popup.width()), available.width())
     x = min(max(anchor.x(), available.left()),
             available.right() - width + 1)
     space_below = available.bottom() - anchor.y() + 1
