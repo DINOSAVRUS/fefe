@@ -250,15 +250,15 @@ def main():
             color: #e5edf5;
             border: 1px solid #34485d;
             border-radius: 9px;
-            padding: 5px;
+            padding: 1px;
             selection-background-color: #245d83;
             selection-color: #ffffff;
             outline: 0;
         }
         QListWidget::item {
-            padding: 8px 10px;
+            padding: 1px 10px;
             border-radius: 6px;
-            margin: 2px;
+            margin: 1px;
         }
         QListWidget::item:selected {
             background-color: #245d83;
