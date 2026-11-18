@@ -241,7 +241,7 @@ def main():
             width: 16px;
             height: 16px;
             background-color: #4aa6d8;
-            border: 4px solid #1b2938;
+            border: 1px solid #65b9ed;
             border-radius: 8px;
         }
         QListWidget, QTextEdit, QTableWidget, QTableView {
